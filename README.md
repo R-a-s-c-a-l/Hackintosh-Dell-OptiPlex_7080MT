@@ -57,7 +57,22 @@
 * System Configuration → PCI Slot ***Disabled*** (如果PCI插槽为空，仅TM系列)
 
 ## 关于无法重新启动
-* Dell 7080MT使用OC引导时出现了重启系统已经关闭但是主机无法重启的问题 长时间等待还会导致CMOS被自动清理BIOS设置丢失的问题，而使用CLOVER没有此问题，后经查找发现我的 Config.plist ResetAddress 和 ResetValue 填写的 0x64 0xFE 再在MaciASL查看 System FACP 发现对应位置已被更改，关闭补丁后也出现和OC引导同样的问题，由此可看出问题就在这，后经比较发现Dell HP Lenovo等品牌机FACP的ResetAddress都为0xB2 但是ResetValue不唯一 ，Dell 几乎所有机器ResetValue都是0x73 而7080MT之外的机器并没有重启问题，实际 0xB2 I/O是可由OEM制造商分配的端口，自然也没有统一规范 至于7080MT为何无法使用 B2 73 尚不清楚，
+* Dell 7080MT使用OC引导时出现了重启系统已经关闭但是主机无法重启的问题 长时间等待还会导致CMOS被自动清理BIOS设置丢失的问题，而使用CLOVER没有此问题，后经查找发现我的 Config.plist ResetAddress 和 ResetValue 填写的 0x64 0xFE 再在MaciASL查看 System FACP 发现对应位置已被更改，关闭补丁后也出现和OC引导同样的问题，由此可看出问题就在这，后经比较发现Dell HP Lenovo等品牌机FACP的ResetAddress都为0xB2 但是ResetValue不唯一 ，Dell 几乎所有机器ResetValue都是0x73 而7080MT之外的机器并没有重启问题，实际 0xB2 I/O 是 SMI Command Port，即使macOS下向该端口写入 0x73 也依旧可以重启，但是在 FACP 中不知为何没效果 ASL测试代码如下：
+```Swift
+Scope (\)
+{
+    OperationRegion (TEST, SystemIO, 0xB2, One) // 另外测试起始偏移量 0x64 _INI 赋值 TEST = 0xFE 也正常重启
+    Field (TEST, ByteAcc, NoLock, Preserve)
+    {
+        TEST,   8
+    }
+    Method (_INI)
+    {
+        TEST = 0x73 // 当macOS启动执行ACPI后会直接黑屏重启
+    }
+}
+```
+
 * Clover Configurator的注释中找到相关说明如下：
 ![IOreg](https://github.com/R-a-s-c-a-l/Hackintosh-Dell-OptiPlex_7080MT/blob/main/Pic/RESET.png)
 * 关于 OC 的 FadtEnableReset 无效的问题，查看源码发现这个选项仅针对 FACP 中没有声明 ResetAddress 和 ResetValue的机器很显然 Dell 明确为 0xB2 0x73 这个选项没用。。。。
