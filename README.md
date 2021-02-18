@@ -28,7 +28,7 @@
 
 * 不同的网卡的安装方式可能蓝牙HCI位置可能不同，我的蓝牙USB跳线直接插在主机后的第二个`USB2.0 Type-A` 端口 (`HS09`) 
 
-## 传感器方面
+## 传感器方面🌡️
 
 * 相关驱动请自行添加
 
@@ -62,13 +62,13 @@
 * 屏蔽 HPET(高精度计时器) 释放中断资源解决无法加载AppleHDA的问题
 * SSDT.aml 包含 PMCR (用于修复电源键不可用的问题) Plugin-type 1（用于加载X86PP不多解释）和屏蔽对于macOS不需要的ACPI、 PNP 和 没有物理设备或物理设备默认禁用的PCI设备
 
-## 声卡驱动方面
+## 声卡驱动方面🔊
 
 * 关于DP音频随机失效问题，EFI使用`FakePCIID Match 06C8 Fake A348 (300 Series Q370 原生ID)` AppleALC自带的针对`Comet-Lake-PCH-V (0x6C8)`芯片组`Patch`不是常规的`Device-id Patch`对于显示器音频和板载声卡共用同一个音频控制器的设备(直白说就是 AppleHDADriver 和 AppleHDAHDMI_DPDriver 都在 HDEF@1F,3 下)，虽然可以驱动板载声卡但却因为无法加载`IOClass: AppleHDAHDMI_DPDriver`导致 DP_HDMI_Audio 无法使用，故使用 FakePCIID 仿冒成原生ID来稳定的驱动核心显卡数字音频，
 ![DP音频输出](https://github.com/R-a-s-c-a-l/Hackintosh-Dell-OptiPlex_7080MT/blob/main/Pic/DPAudio.png)
 ![IOreg](https://github.com/R-a-s-c-a-l/Hackintosh-Dell-OptiPlex_7080MT/blob/main/Pic/ioreg.png)
 
-## EFI 使用时出现其他问题，或者有其他有价值的意见和建议请提交Issues探讨
+## EFI 使用时出现其他问题，或者有其他有价值的意见和建议请提交Issues探讨🤔️
 
 # 注意⚠️
 
@@ -83,7 +83,7 @@
 * Secure → Intel SGX ***Disabled*** （建议)
 * System Configuration → PCI Slot ***Disabled*** (如果PCI插槽为空，仅TM系列)
 
-# 关于无法重新启动
+# 关于无法重新启动🔄
 
 * Dell 7080MT使用OC引导时出现了重启系统已经关闭但是主机无法重启的问题 长时间等待还会导致CMOS被自动清理BIOS设置丢失的问题，而使用CLOVER没有此问题，后经查找发现我的 Config.plist ResetAddress 和 ResetValue 填写的 0x64 0xFE 再在MaciASL查看 System FACP 发现对应位置已被更改，关闭补丁后也出现和OC引导同样的问题，由此可看出问题就在这，后经比较发现Dell HP Lenovo等品牌机FACP的ResetAddress都为0xB2 但是ResetValue不唯一 ，Dell 几乎所有机器ResetValue都是0x73 而7080MT之外的机器并没有重启问题，实际 0xB2 I/O 是 SMI Command Port，即使macOS下向该端口写入 0x73 也依旧可以重启，但是在 FACP 中不知为何没效果 ASL测试代码如下：
 ```Swift
@@ -106,7 +106,7 @@ Scope (\)
 * 关于 OC 的 FadtEnableReset 无效的问题，查看源码发现这个选项仅针对 FACP 中没有声明 ResetAddress 和 ResetValue的机器很显然 Dell 明确为 0xB2 0x73 这个选项没用。。。。
 * 在OC的ACPI补丁部分将 FACP的 0xB2 0x73 改为 0xCF9 0x06或者 0x64 0xFE 都可以解决重启的问题 
 
-# 关于如何修复Windows 热重启到 macOS 麦克风不可用问题
+# 关于如何修复Windows 热重启到 macOS 麦克风不可用问题🎤
 
 * Windows到macOS热重启出现部分硬件无法工作的问题已经是老生常谈了，目前也没有什么好的解决办法，还是推荐关机再开机，但是在 0xCF9 I/O端口写入ResetValue不止0x06 根据Intel DataSheet 说明 写入0x02 为 CpuReset 写入 0x06 为 HardReset (也是最常用的重启) ，写入0x0E为 Full Reset (关机再自动开机) 将 FACP的 ResetValue 通过ACPI Patch修改为 0E 即可解决该问题 
 * 请自行修改 Config.plist 如果你不用OC引导Windows 请忽略此部分说明
