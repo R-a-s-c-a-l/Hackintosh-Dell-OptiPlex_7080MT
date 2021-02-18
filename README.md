@@ -16,7 +16,8 @@
 
 * CPU 睿频
 * IGPU 图形加速，HEVC H.264 En/Decode 
-* ALC256 所有输入输出正常 LayoutID 67 线路输出独立，可选内置扬声器与耳机 或 线路输出与耳机自动切换麦克风工作需要VerbStub和ComboJack (AppleALC 已合并)
+* 仿冒声卡仅针对7080MT的ALC256 LayoutID 67 线路输出独立，可选内置扬声器与耳机 或 线路输出与耳机自动切换 (AppleALC 1.5.6已合并Commit "Add ALC256 layout-id 67 for Dell OptiPlex 7080")
+* 麦克风工作需要VerbStub和ComboJack
 ![演示.png](https://github.com/R-a-s-c-a-l/Hackintosh-Dell-OptiPlex_7080MT/blob/main/Pic/演示.gif)
 * 除最靠近网口的USB2.0(为仅保留15端口而屏蔽)其他的正常
 * 以太网卡 
