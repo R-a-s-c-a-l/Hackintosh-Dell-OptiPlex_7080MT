@@ -38,6 +38,10 @@
 * EFI中 Weg 仅包含开机第二阶段花屏补丁、`GFX0 → IGPU`、`HECI → IMEI`的重命名、FakeID
 * 有独立显卡的请自行更换原版
 
+## ComboJack_Reloader🤖️
+
+* 自动化程序用来解决插入耳机弹窗忘记选择耳机类型或选错时无需重新插拔耳机直接运行该自动化脚本便可重新调用插孔侦测供您选择
+
 ## IOKitPersonalitiesInjector.kext (空壳驱动)
  
 * 包含 iMac19,2 SMBIOS 仅核显的`AGPM`注入来修复核显视频处理时满载满频且不保留基本图形渲染性能而导致UI卡顿的问题、
