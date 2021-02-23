@@ -118,6 +118,10 @@ Scope (\)
 * Windows到macOS热重启出现部分硬件无法工作的问题已经是老生常谈了，目前也没有什么好的解决办法，还是推荐关机再开机，但是在 0xCF9 I/O端口写入ResetValue不止0x06 根据Intel DataSheet 说明 写入0x02 为 CpuReset 写入 0x06 为 HardReset (也是最常用的重启) ，写入0x0E为 Full Reset (关机再自动开机) 将 FACP的 ResetValue 通过ACPI Patch修改为 0E 即可解决该问题 
 * 请自行修改 Config.plist 如果你不用OC引导Windows 请忽略此部分说明
 
+# 可能在7080MT上普遍存在的问题
+
+* 7080MT在BIOS中禁用**Deep Sleep** 开启 **WOL** 可能导致睡眠期间系统自动触发DarkWake (RTC (Alarm) 或者 S3 WOL) 后再次自动睡眠时出现系统已经睡眠（呼吸灯闪烁) 但是主机后的电源的指示灯依旧亮着，且此时无法将电脑从睡眠唤醒，稍等片刻自动关机的问题。
+
 # 修改DVMT和CFG LOCK
 
 * 无法使用`Grub Setup_var` 需要用到Ru.efi (Ru.efi 在/EFI/OC/Tools里) 请将Ru.efi在 BIOS 中添加进 Boot Menus 后启动 进入 Ru 后按 "Alt" + "=" 并查找 **CPUSetup** 和 **SaSetup**
