@@ -24,6 +24,7 @@
 * 除最靠近网口的USB2.0(为仅保留15端口而屏蔽)其他的正常
 * 以太网卡 
 * 睡眠唤醒
+* 休眠唤醒 (需要打开 DiscardHibernateMap，可选放入 HibernateFixup.kext，主硬盘SATA则需要开启ThirdPartyDrives，Config→HibernateMode：Auto 系统休眠模式选择25 并加入 Disable RTC Wake Schedule 补丁)
 
 # 补充及说明
 
