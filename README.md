@@ -45,7 +45,7 @@
 
 * 自动化程序用来解决插入耳机弹窗忘记选择耳机类型或选错时无需重新插拔耳机直接运行该自动化脚本便可重新调用插孔侦测供您选择
 
-![CRL](https://github.com/R-a-s-c-a-l/Hackintosh-Dell-OptiPlex_7080MT/blob/main/Pic/CRL.gif)
+![CRL](https://github.com/R-a-s-c-a-l/Hackintosh-Dell-OptiPlex_7080MT/blob/main/Pic/CRL.mov)
 
 ## IOKitPersonalitiesInjector.kext (空壳驱动)
  
