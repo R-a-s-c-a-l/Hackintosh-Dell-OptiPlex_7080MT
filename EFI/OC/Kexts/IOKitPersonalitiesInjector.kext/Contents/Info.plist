@@ -197,6 +197,28 @@
 				</dict>
 			</dict>
 		</dict>
+		<key>Headphone Jack Adapter</key>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>com.apple.driver.AppleUSBHostMergeProperties</string>
+			<key>IOClass</key>
+			<string>AppleUSBHostMergeProperties</string>
+			<key>IOProviderClass</key>
+			<string>IOUSBHostDevice</string>
+			<key>IOProviderMergeProperties</key>
+			<dict>
+				<key>DisplayRouting</key>
+				<integer>1</integer>
+				<key>IOAudioDeviceLocalizedBundle</key>
+				<string>IOUSBFamily.kext/Contents/PlugIns/AppleUSBMergeNub.kext</string>
+				<key>USB Product Name</key>
+				<string>外置耳麦</string>
+			</dict>
+			<key>idProduct</key>
+			<integer>4362</integer>
+			<key>idVendor</key>
+			<integer>1452</integer>
+		</dict>
 		<key>Intel14SeriesAHCI</key>
 		<dict>
 			<key>CFBundleIdentifier</key>
@@ -251,9 +273,7 @@
 			<key>IOProviderMergeProperties</key>
 			<dict>
 				<key>port-count</key>
-				<data>
-				GAAAAA==
-				</data>
+				<data>GAAAAA==</data>
 				<key>ports</key>
 				<dict>
 					<key>HS01</key>
@@ -263,9 +283,7 @@
 						<key>name</key>
 						<string>HS01</string>
 						<key>port</key>
-						<data>
-						AQAAAA==
-						</data>
+						<data>AQAAAA==</data>
 					</dict>
 					<key>HS02</key>
 					<dict>
@@ -274,9 +292,7 @@
 						<key>name</key>
 						<string>HS02</string>
 						<key>port</key>
-						<data>
-						AgAAAA==
-						</data>
+						<data>AgAAAA==</data>
 					</dict>
 					<key>HS05</key>
 					<dict>
@@ -285,9 +301,7 @@
 						<key>name</key>
 						<string>HS05</string>
 						<key>port</key>
-						<data>
-						BQAAAA==
-						</data>
+						<data>BQAAAA==</data>
 					</dict>
 					<key>HS06</key>
 					<dict>
@@ -296,9 +310,7 @@
 						<key>name</key>
 						<string>HS06</string>
 						<key>port</key>
-						<data>
-						BgAAAA==
-						</data>
+						<data>BgAAAA==</data>
 					</dict>
 					<key>HS07</key>
 					<dict>
@@ -307,9 +319,7 @@
 						<key>name</key>
 						<string>HS07</string>
 						<key>port</key>
-						<data>
-						BwAAAA==
-						</data>
+						<data>BwAAAA==</data>
 					</dict>
 					<key>HS08</key>
 					<dict>
@@ -318,9 +328,7 @@
 						<key>name</key>
 						<string>HS08</string>
 						<key>port</key>
-						<data>
-						CAAAAA==
-						</data>
+						<data>CAAAAA==</data>
 					</dict>
 					<key>HS09</key>
 					<dict>
@@ -329,9 +337,7 @@
 						<key>name</key>
 						<string>HS09</string>
 						<key>port</key>
-						<data>
-						CQAAAA==
-						</data>
+						<data>CQAAAA==</data>
 					</dict>
 					<key>HS12</key>
 					<dict>
@@ -340,9 +346,7 @@
 						<key>name</key>
 						<string>HS12</string>
 						<key>port</key>
-						<data>
-						DAAAAA==
-						</data>
+						<data>DAAAAA==</data>
 					</dict>
 					<key>HS13</key>
 					<dict>
@@ -351,9 +355,7 @@
 						<key>name</key>
 						<string>HS13</string>
 						<key>port</key>
-						<data>
-						DQAAAA==
-						</data>
+						<data>DQAAAA==</data>
 					</dict>
 					<key>SS01</key>
 					<dict>
@@ -362,9 +364,7 @@
 						<key>name</key>
 						<string>SS01</string>
 						<key>port</key>
-						<data>
-						EQAAAA==
-						</data>
+						<data>EQAAAA==</data>
 					</dict>
 					<key>SS02</key>
 					<dict>
@@ -373,9 +373,7 @@
 						<key>name</key>
 						<string>SS02</string>
 						<key>port</key>
-						<data>
-						EgAAAA==
-						</data>
+						<data>EgAAAA==</data>
 					</dict>
 					<key>SS05</key>
 					<dict>
@@ -384,9 +382,7 @@
 						<key>name</key>
 						<string>SS05</string>
 						<key>port</key>
-						<data>
-						FQAAAA==
-						</data>
+						<data>FQAAAA==</data>
 					</dict>
 					<key>SS06</key>
 					<dict>
@@ -395,9 +391,7 @@
 						<key>name</key>
 						<string>SS06</string>
 						<key>port</key>
-						<data>
-						FgAAAA==
-						</data>
+						<data>FgAAAA==</data>
 					</dict>
 					<key>SS07</key>
 					<dict>
@@ -406,9 +400,7 @@
 						<key>name</key>
 						<string>SS07</string>
 						<key>port</key>
-						<data>
-						FwAAAA==
-						</data>
+						<data>FwAAAA==</data>
 					</dict>
 					<key>SS08</key>
 					<dict>
@@ -417,9 +409,7 @@
 						<key>name</key>
 						<string>SS08</string>
 						<key>port</key>
-						<data>
-						GAAAAA==
-						</data>
+						<data>GAAAAA==</data>
 					</dict>
 				</dict>
 			</dict>
