@@ -92,6 +92,7 @@
 * Secure → PTT Secure(TPM) ***Disabled*** （建议)
 * Secure → Intel SGX ***Disabled*** （建议)
 * System Configuration → PCI Slot ***Disabled*** (如果PCI插槽为空，仅TM系列)
+* VT- Direct I/O **Disabled** (开启可能导致唤醒NVMe读取掉速，不在BIOS关闭也可以☑️Config→Kernel→ Quirks→DisableIoMapper)
 
 # 关于无法重新启动🔄
 
@@ -120,6 +121,12 @@ Scope (\)
 
 * Windows到macOS热重启出现部分硬件无法工作的问题已经是老生常谈了，目前也没有什么好的解决办法，还是推荐关机再开机，但是在 0xCF9 I/O端口写入ResetValue不止0x06 根据Intel DataSheet 说明 写入0x02 为 CpuReset 写入 0x06 为 HardReset (也是最常用的重启) ，写入0x0E为 Full Reset (关机再自动开机) 将 FACP的 ResetValue 通过ACPI Patch修改为 0E 即可解决该问题 
 * 请自行修改 Config.plist 如果你不用OC引导Windows 请忽略此部分说明
+
+# 关于如何解决可能出现的唤醒AirDrop自动关闭问题🤦🏻‍♂️
+
+* 通常使用PCIe 1x Wi-Fi转接卡的用户可能普遍存在唤醒AirDrop出于关闭状态的问题，解决方案为重新启动 " Sharingd " 进程，可使用SleepWatcher 进程守护程序 并在 rc.wake 写入 killall sharingd 程序监测到系统唤醒执行从而解决唤醒 AirDrop关闭问题
+* 也可在rc.wake 写入 pmset schedule cancelall 达到每次唤醒都清空唤醒计划的目的 (非 PowerNap Wake Schedule) ，或其他命令
+* 下载链接 ![点这里下载 Sleepwatcher](https://www.bernhard-baehr.de/sleepwatcher_2.2.1.tgz)
 
 # 可能在7080MT上普遍存在的问题
 
