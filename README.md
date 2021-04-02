@@ -126,7 +126,7 @@ Scope (\)
 
 * 通常使用PCIe 1x Wi-Fi转接卡的用户可能普遍存在唤醒AirDrop出于关闭状态的问题，解决方案为重新启动 " Sharingd " 进程，可使用SleepWatcher 进程守护程序 并在 rc.wake 写入 killall sharingd 程序监测到系统唤醒执行从而解决唤醒 AirDrop关闭问题
 * 也可在rc.wake 写入 pmset schedule cancelall 达到每次唤醒都清空唤醒计划的目的 (非 PowerNap Wake Schedule) ，或其他命令
-* 下载链接 ![点这里下载 Sleepwatcher](https://www.bernhard-baehr.de/sleepwatcher_2.2.1.tgz)
+* 下载链接 [点这里下载 Sleepwatcher](https://www.bernhard-baehr.de/sleepwatcher_2.2.1.tgz)
 
 # 可能在7080MT上普遍存在的问题
 
