@@ -72,12 +72,6 @@
 * 屏蔽 HPET(高精度计时器) 释放中断资源解决无法加载AppleHDA的问题
 * SSDT.aml 包含 PMCR (用于修复电源键不可用的问题) Plugin-type 1（用于加载X86PP不多解释）和屏蔽对于macOS不需要的ACPI、 PNP 和 没有物理设备或物理设备默认禁用的PCI设备
 
-## 声卡驱动方面🔊
-
-* 关于DP音频随机失效问题，EFI使用`FakePCIID Match 06C8 Fake A348 (300 Series Q370 原生ID)` AppleALC自带的针对`Comet-Lake-PCH-V (0x6C8)`芯片组`Patch`不是常规的`Device-id Patch`对于显示器音频和板载声卡共用同一个音频控制器的设备(直白说就是 AppleHDADriver 和 AppleHDAHDMI_DPDriver 都在 HDEF@1F,3 下)，虽然可以驱动板载声卡但却因为无法加载`IOClass: AppleHDAHDMI_DPDriver`导致 DP_HDMI_Audio 无法使用，故使用 FakePCIID 仿冒成原生ID来稳定的驱动核心显卡数字音频，
-![DP音频输出](https://github.com/R-a-s-c-a-l/Hackintosh-Dell-OptiPlex_7080MT/blob/main/Pic/DPAudio.png)
-![IOreg](https://github.com/R-a-s-c-a-l/Hackintosh-Dell-OptiPlex_7080MT/blob/main/Pic/ioreg.png)
-
 ## EFI 使用时出现其他问题，或者有其他有价值的意见和建议请提交Issues探讨🤔️
 
 # 注意⚠️
