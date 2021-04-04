@@ -24,13 +24,13 @@
 * 除最靠近网口的USB2.0(为仅保留15端口而屏蔽)其他的正常
 * 以太网卡 
 * 睡眠唤醒
-* 休眠唤醒 (需要打开 DiscardHibernateMap，可选放入 HibernateFixup.kext，主硬盘SATA则需要开启ThirdPartyDrives，Config→HibernateMode：Auto 系统休眠模式选择25 并加入 Disable RTC Wake Schedule 补丁)
+* 休眠唤醒 (需要打开 DiscardHibernateMap，可选放入 _HibernateFixup.kext_ ，主硬盘 SATA 则需要开启 _ThirdPartyDrives，Config → HibernateMode：Auto_ 系统休眠模式选择 25 并加入 _Disable RTC Wake Schedule_ 补丁)
 
 # 补充及说明
 
 ### 蓝牙
 
-* 不同的网卡的安装方式可能蓝牙HCI位置可能不同，我的蓝牙USB跳线直接插在主机后的第二个`USB2.0 Type-A` 端口 (`HS09`) 
+* 不同的网卡的安装方式可能蓝牙HCI位置可能不同，我的蓝牙USB跳线直接插在主机后的第二个 _USB2.0 Type-A_ 端口 (_HS09_) 
 
 ### 传感器方面🌡️
 
@@ -38,7 +38,7 @@
 
 ### WhateverGreen 
  
-* EFI中 Weg 仅包含开机第二阶段花屏补丁、`GFX0 → IGPU`、`HECI → IMEI`的重命名、FakeID
+* EFI 中 Weg 仅包含开机第二阶段花屏补丁、 _GFX0 → IGPU HECI → IMEI_ 的重命名、 _FakeID_
 * 有独立显卡的请自行更换原版
 
 ### ComboJack_Reloader🤖️
@@ -49,28 +49,29 @@
 
 ### IOKitPersonalitiesInjector.kext (空壳驱动)
  
-* 包含 iMac19,2 SMBIOS 仅核显的`AGPM`注入来修复核显视频处理时满载满频且不保留基本图形渲染性能而导致UI卡顿的问题、
-* 修改系统报告 SATA 控制器的名称 GenericAHCI → Intel 14 Series Chipset (仅作修饰)，
-* USB电流属性注入 (仅针对11.0 的新`IOProviderClass：AppleUSBHostResources`，之前版本为`AppleBusPowerController`)，可为 iOS 设备提供12W的充电功率 (5v 2.4A)
+* 包含 iMac19,2 SMBIOS 仅核显的 _AGPM_ 注入来修复核显视频处理时满载满频且不保留基本图形渲染性能而导致UI卡顿的问题、
+* 修改系统报告 SATA 控制器的名称 _GenericAHCI_ → _Intel 14 Series Chipset_ (仅作修饰)，
+* USB电流属性注入 (仅针对11.0 的新 IOProviderClass：_AppleUSBHostResources_，之前版本为 _AppleBusPowerController_ )，可为 iOS 设备提供12W的充电功率 (5v 2.4A)
 
 ### DVMT预分配和CFGLock
  
-* EFI中不包含DVMT补丁请自行使用 `Ru.efi` 参照 **修改DVMT和CFG LOCK** 操作，
-* 没解锁CFG Lock 请自行开启 `AppleXcpmCfgLock` 
-* 没修改 `DVMT Pre-Allcated` 请使用原版 WhateverGreen.kext 并在 Config.plist 添加核显设备属性 `framebuffer-patch-enable Data 0100000 和 framebuffer-stolenmem Data 00003001`
+* EFI中不包含 _DVMT_ 补丁请自行使用 _Ru.efi_ 参照 **修改DVMT和CFG LOCK** 操作，
+* 没解锁 _CFG Lock_ 请自行开启 _AppleXcpmCfgLock_ 
+* 没修改 _DVMT Pre-Allcated_ 请使用原版 _WhateverGreen.kext_ 并在 _Config.plist_ 添加核显设备属性:
+  > framebuffer-patch-enable Data 0100000 和 framebuffer-stolenmem Data 00003001
 
 ### SMBIOS
 
-* 请自行补全`Config`默认设定为`UpdateSMBIOSModel:Custom + CustonSmbiosGuid`可以防止 OC 引导其他操作系统注入`PlatformInfo`但是会导致无法安装`Win版BootCamp`控制面板，可以安装前改回`UpdateSMBIOSModel:Overwrite 并关闭 CustonSmbiosGuid`安装后再打开。
+* 请自行补全 _Config_ 默认设定为 _UpdateSMBIOSModel:Custom + CustonSmbiosGuid_ 可以防止 OC 引导其他操作系统注入 _PlatformInfo_ 但是会导致无法安装 Win 版 BootCamp 控制面板，可以安装前改回 _UpdateSMBIOSModel:Overwrite_ 并关闭 _CustonSmbiosGuid_ 安装后再打开。
 
 ### SystemUUID
  
-* 可以选择`Windwos CMD`输入`wmic csproduct get uuid` 获取主板`DmiGuid`填入`SystemUUID`
+* 可以选择 _Windwos CMD_ 输入 _wmic csproduct get uuid_ 获取主板 _DmiGuid_ 填入 _SystemUUID_
 
 ### ACPI修补部分
 
-* 屏蔽 HPET(高精度计时器) 释放中断资源解决无法加载AppleHDA的问题
-* SSDT.aml 包含 PMCR (用于修复电源键不可用的问题) Plugin-type 1（用于加载X86PP不多解释）和屏蔽对于macOS不需要的ACPI、 PNP 和 没有物理设备或物理设备默认禁用的PCI设备
+* 屏蔽 HPET(高精度计时器) 释放中断资源解决无法加载 _AppleHDA_ 的问题
+* _SSDT.aml_ 包含 _PMCR_ (用于修复电源键不可用的问题) _Plugin-type 1_ （用于加载X86PP不多解释）和屏蔽对于macOS不需要的 _ACPI、 PNP_ 和 没有物理设备或物理设备默认禁用的PCI设备
 
 ### BIOS 设置
 
@@ -84,11 +85,11 @@
 
 ### 关于无法重新启动🔄
 
-* Dell 7080MT使用OC引导时出现了重启系统已经关闭但是主机无法重启的问题 长时间等待还会导致CMOS被自动清理BIOS设置丢失的问题，而使用CLOVER没有此问题，后经查找发现我的 Config.plist ResetAddress 和 ResetValue 填写的 0x64 0xFE 再在MaciASL查看 System FACP 发现对应位置已被更改，关闭补丁后也出现和OC引导同样的问题，由此可看出问题就在这，后经比较发现Dell HP Lenovo等品牌机FACP的ResetAddress都为0xB2 但是ResetValue不唯一 ，Dell 几乎所有机器ResetValue都是0x73 而7080MT之外的机器并没有重启问题，实际 0xB2 I/O 是 SMI Command Port，即使macOS下向该端口写入 0x73 也依旧可以重启，但是在 FACP 中不知为何没效果 ASL测试代码如下：
+* Dell 7080MT使用OC引导时出现了重启系统已经关闭但是主机无法重启的问题 长时间等待还会导致CMOS被自动清理BIOS设置丢失的问题，而使用CLOVER没有此问题，后经查找发现我的 _Config.plist_ _ResetAddress_ 和 _ResetValue_ 填写的 0x64 0xFE 再在 _MaciASL_ 查看 _System FACP_ 发现对应位置已被更改，关闭补丁后也出现和 _OC_ 引导同样的问题，由此可看出问题就在这，后经比较发现 _Dell HP Lenovo_ 等品牌机 _FACP_ 的 _ResetAddress_ 都为0xB2 但是 _ResetValue_ 不唯一 ，Dell 几乎所有机器 _ResetValue_ 都是0x73 而7080MT之外的机器并没有重启问题，实际 0xB2 I/O 是 _SMI Command Port_ ，即使 _macOS_ 下向该端口写入 0x73 也依旧可以重启，但是在 FACP 中不知为何没效果 ASL测试代码如下：
 ```Swift
 Scope (\)
 {
-    OperationRegion (TEST, SystemIO, 0xB2, One) // 另外测试起始偏移量 0x64 _INI 赋值 TEST = 0xFE 也正常重启
+    OperationRegion (TEST, SystemIO, 0xB2, One) // 另外测试起始偏移量 0x64 _INI 赋值 REST = 0xFE 也正常重启
     Field (TEST, ByteAcc, NoLock, Preserve)
     {
         REST,   8
@@ -100,9 +101,9 @@ Scope (\)
 }
 ```
 
-* Clover Configurator的注释中找到相关说明如下：
+* _Clover Configurator_ 的注释中找到相关说明如下：
 ![IOreg](https://github.com/R-a-s-c-a-l/Hackintosh-Dell-OptiPlex_7080MT/blob/main/Pic/RESET.png)
-* 关于 OC 的 FadtEnableReset 无效的问题，查看源码发现这个选项仅针对 FACP 中没有声明 ResetAddress 和 ResetValue的机器很显然 Dell 明确为 0xB2 0x73 这个选项没用。。。。
+* 关于 OC 的 FadtEnableReset 无效的问题，查看源码发现这个选项仅针对 FACP 中没有声明 _ResetAddress_ 和 _ResetValue_ 的机器很显然 Dell 明确为 0xB2 0x73 这个选项没用。。。。
 * 在OC的ACPI补丁部分将 FACP的 0xB2 0x73 改为 0xCF9 0x06或者 0x64 0xFE 都可以解决重启的问题 
 
 ### 关于如何修复Windows 热重启到 macOS 麦克风不可用问题🎤
