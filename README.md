@@ -24,9 +24,9 @@
 * 除最靠近网口的USB2.0(为仅保留15端口而屏蔽)其他的正常
 * 以太网卡 
 * 睡眠唤醒
-* 休眠唤醒 (需要打开 DiscardHibernateMap，可选放入 _HibernateFixup.kext_ ，主硬盘 SATA 则需要开启 _ThirdPartyDrives，Config → HibernateMode：Auto_ 系统休眠模式选择 25 并加入 _Disable RTC Wake Schedule_ 补丁)
+* 休眠唤醒 (需要打开 DiscardHibernateMap，如果主硬盘是 _SATA_ 则需要开启 _ThirdPartyDrives，Config → HibernateMode：Auto_ 系统休眠模式选择 25 并加入 _Disable RTC Wake Schedule_ 补丁)
 
-# 补充及说明
+## 补充及说明
 
 ### 蓝牙
 
@@ -49,9 +49,7 @@
 
 ### IOKitPersonalitiesInjector.kext (空壳驱动)
  
-* 包含 iMac19,2 SMBIOS 仅核显的 _AGPM_ 注入来修复核显视频处理时满载满频且不保留基本图形渲染性能而导致UI卡顿的问题、
-* 修改系统报告 SATA 控制器的名称 _GenericAHCI_ → _Intel 14 Series Chipset_ (仅作修饰)，
-* USB电流属性注入 (仅针对11.0 的新 IOProviderClass：_AppleUSBHostResources_，之前版本为 _AppleBusPowerController_ )，可为 iOS 设备提供12W的充电功率 (5v 2.4A)
+* 包含 iMac19,2 SMBIOS 仅核显的 _AGPM_ 注入来修复核显视频处理时满载满频且不保留基本图形渲染性能而导致UI卡顿的问题、和 _USB_ 定制
 
 ### DVMT预分配和CFGLock
  
@@ -72,6 +70,7 @@
 
 * 屏蔽 HPET(高精度计时器) 释放中断资源解决无法加载 _AppleHDA_ 的问题
 * _SSDT.aml_ 包含 _PMCR_ (用于修复电源键不可用的问题) _Plugin-type 1_ （用于加载X86PP不多解释）和屏蔽对于macOS不需要的 _ACPI、 PNP_ 和 没有物理设备或物理设备默认禁用的PCI设备
+* 通过每个 _PCIe Root Port_ 下的 _PRES_ 方法的返回值屏蔽没有安装拓展卡或者出厂被屏蔽的桥 _ACPI_ 设备
 
 ### BIOS 设置
 
@@ -85,7 +84,7 @@
 
 ### 关于无法重新启动🔄
 
-* Dell 7080MT使用OC引导时出现了重启系统已经关闭但是主机无法重启的问题 长时间等待还会导致CMOS被自动清理BIOS设置丢失的问题，而使用CLOVER没有此问题，后经查找发现我的 _Config.plist_ _ResetAddress_ 和 _ResetValue_ 填写的 0x64 0xFE 再在 _MaciASL_ 查看 _System FACP_ 发现对应位置已被更改，关闭补丁后也出现和 _OC_ 引导同样的问题，由此可看出问题就在这，后经比较发现 _Dell HP Lenovo_ 等品牌机 _FACP_ 的 _ResetAddress_ 都为0xB2 但是 _ResetValue_ 不唯一 ，Dell 几乎所有机器 _ResetValue_ 都是0x73 而7080MT之外的机器并没有重启问题，实际 0xB2 I/O 是 _SMI Command Port_ ，即使 _macOS_ 下向该端口写入 0x73 也依旧可以重启，但是在 FACP 中不知为何没效果 ASL测试代码如下：
+* Dell 7080MT使用OC引导时出现了重启系统已经关闭但是主机无法重启的问题 长时间等待还会导致CMOS被自动清理BIOS设置丢失的问题，而使用CLOVER没有此问题，后经查找发现我的 _Config.plist_ _ResetAddress_ 和 _ResetValue_ 填写的 0x64 0xFE 再在 _MaciASL_ 查看 _System FACP_ 发现对应位置已被更改，关闭补丁后也出现和 _OC_ 引导同样的问题，由此可看出问题就在这，后经比较发现 _Dell HP Lenovo_ 等品牌机 _FACP_ 的 _ResetAddress_ 都为0xB2 但是 _ResetValue_ 不唯一 ，Dell 几乎所有机器 _ResetValue_ 都是0x73 而7080MT之外的机器并没有重启问题，实际 0xB2 I/O 是 _SMI Command Port_ ，即使 _macOS_ 下向该端口写入 0x73 也依旧可以重启，但是在 FACP 中不知为何没效果,  ASL测试代码如下：
 ```Swift
 Scope (\)
 {
