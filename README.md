@@ -17,7 +17,7 @@
 * CPU 睿频
 * IGPU 图形加速，HEVC H.264 En/Decode 
 * 仿冒声卡仅针对7080MT的ALC256 LayoutID 67 线路输出独立，可选内置扬声器与耳机 或 线路输出与耳机自动切换 (AppleALC 1.5.6已合并Commit "Add ALC256 layout-id 67 for Dell OptiPlex 7080")
-* EFI 中 AppleALC 还包含改进 AppleALC Patch CometLake-PCH-cAVs (pci8086,6c8) 修复无法加载AppleHDAHDMI_DPDriver 的问题
+* EFI 中 AppleALC 还包含改进 Patch CometLake-PCH-cAVs (pci8086,6c8) 修复无法加载AppleHDAHDMI_DPDriver 的问题
 * 麦克风工作需要VerbStub和ComboJack
 
 ![演示](https://github.com/R-a-s-c-a-l/Hackintosh-Dell-OptiPlex_7080MT/blob/main/Pic/演示.mov)
@@ -41,12 +41,6 @@
  
 * EFI 中 Weg 仅包含开机第二阶段花屏补丁、 _GFX0 → IGPU HECI → IMEI_ 的重命名、 _FakeID_
 * 有独立显卡的请自行更换原版
-
-### ComboJack_Reloader🤖️
-
-* 自动化程序用来解决插入耳机弹窗忘记选择耳机类型或选错时无需重新插拔耳机直接运行该自动化脚本便可重新调用插孔侦测供您选择
-
-![CRL](https://github.com/R-a-s-c-a-l/Hackintosh-Dell-OptiPlex_7080MT/blob/main/Pic/CRL.mov)
 
 ### IOKitPersonalitiesInjector.kext (空壳驱动)
  
